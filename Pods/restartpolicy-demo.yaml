@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: restart-demo
+spec: 
+  containers:
+    - name: nginx
+      image: nginx:1.23
+      ports: 
+        - containerPort: 80 
+          protocol: TCP
+      command: 
+        - sleep
+        - "4"
+  restartPolicy: Never
+
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: restart-nopolicy
+spec: 
+  containers:
+    - name: nginx1
+      image: nginx:1.23
+      ports: 
+        - containerPort: 80 
+          protocol: TCP
+      command: 
+        - sleep
+        - "4"

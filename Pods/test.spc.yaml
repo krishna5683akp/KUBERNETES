@@ -1,0 +1,28 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cronjob-spc
+  labels: 
+    app: spc
+spec: 
+  schedule: "0 23 * * *"
+  jobTemplate:
+    metadata: 
+      name: cronjob-spc
+      namespace: test-namespace
+    spec: 
+      backoffLimit: 2
+      selector: 
+        matchLabels: 
+          app: spc
+      template: 
+        metadata: 
+          name: spc
+          namespace: test-namespace
+        spec: 
+          containers: 
+            - image: alpine
+              command: 
+                - wget  https://referenceapplicationskhaja.s3.us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
+                  sleep 30s

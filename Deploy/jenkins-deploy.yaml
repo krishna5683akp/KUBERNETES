@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-deploy
+spec:
+  minReadySeconds: 3
+  replicas: 4
+  selector: 
+    matchLabels:
+      app: jenkins
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata: 
+      name: jenkins-pod
+      labels: 
+        app: jenkins
+        version: "1.625.1"
+    spec: 
+      containers:
+        - name: jenkins-cont
+          image: jenkins:1.625.1
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-svc-pod
+spec: 
+  type: LoadBalancer
+  selector:
+    app: jenkins
+  ports:
+    - name: jenkins-web-port
+      port: 60000
+      targetPort: 8080
+
+
