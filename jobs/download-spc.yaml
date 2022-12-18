@@ -1,0 +1,30 @@
+---
+apiVersion: batch/v1
+kind: CronJob 
+metadata:
+  name: alpine-cron-pod
+  namespace: test-namespace
+spec:
+  schedule: "0 23 * * *"
+  jobTemplate: 
+    metadata: 
+      name: download
+      namespace: test-namespace
+      labels:
+        job: run
+    spec: 
+      # selector:
+      #   matchLabels:
+      #     job: run
+      template: 
+        metadata:
+          name: download
+          namespace: test-namespace
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: download
+              image: alpine:3
+              command: 
+              - wget 
+              - https://referenceapplicationskhaja.s3.us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
