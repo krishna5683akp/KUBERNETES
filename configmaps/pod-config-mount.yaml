@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-config-mount
+spec:   
+  containers:
+    - name: alpine-cont
+      image: alpine:3
+      command:
+        - sleep 
+        - 1d
+      volumeMounts:
+        - name: mount-config
+          mountPath: /configs    
+  volumes:
+    - name: mount-config
+      configMap:
+        name: hello-config

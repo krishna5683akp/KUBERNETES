@@ -1,0 +1,10 @@
+---
+apiVersion:  v1
+kind: ConfigMap
+metadata: 
+  name: hello-config
+data:
+  log_level: DEBUG
+  retries: "3"
+  krishna: Prema
+  timeout: 30s
