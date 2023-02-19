@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: saleor-pod
+  labels:
+    app: saleor
+spec:
+  type: ClusterIP
+  selector: 
+    app: saleor
+  ports:
+    - name: saleor-port
+      port: 4000
+      targetPort: 8000
+      protocol: TCP
+

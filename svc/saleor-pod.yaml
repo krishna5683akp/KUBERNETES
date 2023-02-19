@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: saleor-pod
+  labels:
+    app: saleor
+spec:
+  containers:
+    - name: saleor-nod
+      image: sai3369/sale
+      ports: 
+        - containerPort: 8000
+          protocol: TCP
+          
+
+  
+  

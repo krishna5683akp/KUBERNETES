@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+spec:
+  minReadySeconds: 3
+  replicas: 2
+  selector: 
+    matchLabels:
+      app: nginx
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata: 
+      name: nginx-pod
+      labels: 
+        app: nginx
+        version: "1.625.1"
+    spec: 
+      containers:
+        - name: nginx-cont
+          image: nginx
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc-pod
+spec: 
+  type: LoadBalancer
+  selector:
+    app: nginx
+  ports:
+    - name: nginx-web-port
+      port: 60000
+      targetPort: 80
